@@ -6,33 +6,25 @@ namespace MovieRental
 {
     public class Movie
     {
-        private string title;
-        private Type type;
+        internal static IPriceStrategy RegularPriceStrategy = new RegularPriceStrategy( multiplicator: 15, basePrice: 2, basePriceDays: 2 );
+        internal static IPriceStrategy ChildrenPriceStrategy = new RegularPriceStrategy( multiplicator: 15, basePrice: 15, basePriceDays: 3 );
 
-        public Movie(string title, Type type)
+        ////бонус за аренду новинки на два дня
+        internal static IPriceStrategy NewReleasePriceStrategy = new BonusPriceStrategy( multiplicator: 3, daysForActivityBonus: 1 );
+
+        public readonly string Title;
+
+        internal readonly IPriceStrategy PriceStrategy;
+
+        public Movie(string title, IPriceStrategy priceStrategy)
         {
-            this.title = title;
-            this.type = type;
+            Title = title;
+            PriceStrategy = priceStrategy;
         }
 
-        public enum Type
-        {
-            NEW_RELEASE,
-            REGULAR,
-            CHILDREN
-        }
-
-        public string getTitle()
-        {
-            return title;
-        }
-        public Type getPriceCode()
-        {
-            return type;
-        }
         public override string ToString()
         {
-            return title;
+            return Title;
         }
     }
 }

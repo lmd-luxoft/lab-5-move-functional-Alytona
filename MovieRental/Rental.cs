@@ -1,28 +1,32 @@
 ﻿// NUnit 3 tests
 // See documentation : https://github.com/nunit/docs/wiki/NUnit-Documentation
 using System;
+using System.Text;
 
 namespace MovieRental
 {
     internal class Rental
     {
-        private Movie movie;
-        private int daysRental;
+        public readonly Movie Movie;
+        public readonly int DaysRented;
 
-        public Rental(Movie movie, int daysRental)
+        public readonly double Amount;
+        public readonly int BonusPoints;
+
+        public Rental(Movie movie, int daysRented)
         {
-            this.movie = movie;
-            this.daysRental = daysRental;
+            Movie = movie;
+            DaysRented = daysRented;
+
+            Amount = Movie.PriceStrategy.computePrice( DaysRented );
+
+            //добавить очки для активного арендатора
+            BonusPoints = Movie.PriceStrategy.getBonusPoints( DaysRented ) + 1;
         }
 
-        internal Movie getMovie()
+        public void addToReport (StringBuilder report)
         {
-           return movie;
-        }
-
-        internal int getDaysRented()
-        {
-            return daysRental;
+            report.AppendLine( $"\t{Movie}\t{Amount}" );
         }
     }
 }
