@@ -33,15 +33,10 @@ namespace MovieRental
             int frequentRenterPoints = 0;
             foreach (var item in _rentals)
             {
-                double thisAmount = item.Movie.PriceStrategy.computePrice( item.DaysRented );
+                frequentRenterPoints += item.BonusPoints;
+                totalAmount += item.Amount;
 
-                //добавить очки для активного арендатора
-                frequentRenterPoints++;
-                frequentRenterPoints += item.Movie.PriceStrategy.getBonusPoints( item.DaysRented );
-
-                report.AppendLine($"\t{item.Movie}\t{thisAmount}");
-               
-                totalAmount += thisAmount;
+                item.addToReport( report );
             }
 
             report.AppendLine( $"Сумма задолженности составляет {totalAmount}" );
