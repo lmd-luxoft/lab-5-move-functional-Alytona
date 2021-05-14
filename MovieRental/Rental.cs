@@ -6,23 +6,13 @@ namespace MovieRental
 {
     internal class Rental
     {
-        private Movie movie;
-        private int daysRental;
+        public readonly Movie Movie;
+        public readonly int DaysRented;
 
-        public Rental(Movie movie, int daysRental)
+        public Rental(Movie movie, int daysRented)
         {
-            this.movie = movie;
-            this.daysRental = daysRental;
-        }
-
-        internal Movie getMovie()
-        {
-           return movie;
-        }
-
-        internal int getDaysRented()
-        {
-            return daysRental;
+            Movie = movie;
+            DaysRented = daysRented;
         }
     }
 }
